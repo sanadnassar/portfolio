@@ -40,6 +40,7 @@ function createCarbonFiberTexture() {
 
 export function Model(props) {
   const groupRef = useRef()
+  const trackingClock = useRef(0)
   const rigRefs = useRef({
     head: null,
     torso: null,
@@ -421,14 +422,20 @@ export function Model(props) {
     }
   }, [scene, customMaterials, actions, names])
 
-  useFrame((state) => {
+  useFrame((state, delta) => {
     const t = state.clock.getElapsedTime()
-    const { x: pointerX, y: pointerY } = mouseState.current
+    
+    // Lock cursor tracking for the first 2.0s, then smoothly ease tracking in over 0.6s
+    trackingClock.current = Math.min(trackingClock.current + Math.min(delta, 0.05), 3.0)
+    const trackWeight = THREE.MathUtils.smoothstep(trackingClock.current, 2.0, 2.6)
+
+    const pointerX = mouseState.current.x * trackWeight
+    const pointerY = mouseState.current.y * trackWeight
 
     mouseState.current.energy = THREE.MathUtils.lerp(mouseState.current.energy, 0, 0.04)
     mouseState.current.velX = THREE.MathUtils.lerp(mouseState.current.velX, 0, 0.1)
     mouseState.current.velY = THREE.MathUtils.lerp(mouseState.current.velY, 0, 0.1)
-    const energy = mouseState.current.energy
+    const energy = mouseState.current.energy * trackWeight
 
     const {
       head,
