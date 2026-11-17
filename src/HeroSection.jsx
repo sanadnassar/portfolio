@@ -1,19 +1,34 @@
 import { Canvas } from '@react-three/fiber'
-import { Environment, Float } from '@react-three/drei'
+import { Environment, Float, Lightformer } from '@react-three/drei'
 import { Model } from './Model'
 
 export default function HeroSection() {
   return (
     <section className="relative w-full h-screen bg-black text-white overflow-hidden">
-      {/* 3D Canvas Layer */}
+      {/* 3D Scene Layer */}
       <div className="absolute inset-0 z-0">
-        <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
-          <ambientLight intensity={0.6} />
-          <directionalLight position={[10, 10, 5]} intensity={2} />
-          <Environment preset="city" />
+        <Canvas camera={{ position: [0, 0, 5.5], fov: 42 }}>
+          <ambientLight intensity={0.35} />
           
-          <Float speed={2} rotationIntensity={0.1} floatIntensity={0.3}>
-            <Model position={[1.8, -0.2, 0]} rotation={[0, -0.3, 0]} />
+          {/* Pure white/silver key & rim lights */}
+          <directionalLight position={[-5, 5, 4]} intensity={3} color="#ffffff" />
+          <directionalLight position={[5, 5, 4]} intensity={3} color="#ffffff" />
+          <directionalLight position={[0, 6, -5]} intensity={4} color="#f8fafc" />
+
+          {/* Studio Softboxes: Dark center gap for the eyes, bright silver side & chin wraps */}
+          <Environment resolution={512}>
+            {/* Top brow highlight arc */}
+            <Lightformer form="rect" intensity={5} color="#ffffff" position={[0, 7, 1]} rotation={[Math.PI / 2.2, 0, 0]} scale={[8, 1.2, 1]} />
+            {/* Left cheek & shoulder silver reflection */}
+            <Lightformer form="rect" intensity={4.5} color="#f8fafc" position={[-6, 0, 1]} rotation={[0, Math.PI / 2.3, 0]} scale={[6, 10, 1]} />
+            {/* Right cheek & shoulder silver reflection */}
+            <Lightformer form="rect" intensity={4.5} color="#f8fafc" position={[6, 0, 1]} rotation={[0, -Math.PI / 2.3, 0]} scale={[6, 10, 1]} />
+            {/* Lower chin bevel gradient */}
+            <Lightformer form="rect" intensity={2.5} color="#e2e8f0" position={[0, -5, 2]} rotation={[-Math.PI / 2.5, 0, 0]} scale={[8, 4, 1]} />
+          </Environment>
+          
+          <Float speed={1.8} rotationIntensity={0.05} floatIntensity={0.18}>
+            <Model position={[1.75, -1.1, 0]} rotation={[0, -0.3, 0]} />
           </Float>
         </Canvas>
       </div>
