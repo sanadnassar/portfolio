@@ -34,7 +34,7 @@ export default function HeroSection() {
       </div>
 
       {/* Foreground Hero Content Layer */}
-      <div className="relative z-10 h-full flex flex-col justify-start px-8 md:px-24 pt-32 pointer-events-none">
+      <div className="relative z-10 h-full flex flex-col justify-start px-8 md:px-24 pt-[25vh] pointer-events-none">
         <div className="max-w-2xl text-left pointer-events-auto">
 
           <p className="text-gray-400 font-mono text-sm md:text-base tracking-wide mb-2">
