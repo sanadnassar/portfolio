@@ -55,7 +55,7 @@ export default function HeroSection() {
           </div>
 
           <p className="text-gray-400 max-w-[470px] font-mono text-sm md:text-base tracking-wide mb-3">
-            I build and deploy full-stack applications, focusing on backend development and artificial intelligence. I'm currently studying Computer Science at Western University.
+            I build and deploy full-stack applications, specializing in backend development and artificial intelligence. I'm currently in my third year of Computer Science at Western University.
           </p>
           
           <div className="flex flex-wrap items-center ml-[-6px] gap-4">
