@@ -58,3 +58,13 @@ body.selecting-text, body.selecting-text * {
   opacity: 0;
   animation: navFadeDown 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
+
+html::-webkit-scrollbar, body::-webkit-scrollbar {
+  display: none;
+}
+
+html, body {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  overflow-x: hidden;
+}

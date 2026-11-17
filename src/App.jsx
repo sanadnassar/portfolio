@@ -1,9 +1,20 @@
 import { useState, useEffect } from 'react'
 import HeroSection from './HeroSection'
 import Navbar from './Navbar'
+import ProjectCarousel from './ProjectCarousel'
 
 function App() {
   const [uiVisible, setUiVisible] = useState(false)
+
+  useEffect(() => {
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual'
+    }
+    if (window.location.hash) {
+      window.history.replaceState(null, '', window.location.pathname)
+    }
+    window.scrollTo(0, 0)
+  }, [])
 
   useEffect(() => {
     const handleSelectStart = () => document.body.classList.add('selecting-text')
@@ -25,6 +36,7 @@ function App() {
         uiVisible={uiVisible}
         onRevealUI={() => setUiVisible(true)}
       />
+      <ProjectCarousel />
     </main>
   )
 }
