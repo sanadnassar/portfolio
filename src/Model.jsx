@@ -425,17 +425,22 @@ export function Model(props) {
   useFrame((state, delta) => {
     const t = state.clock.getElapsedTime()
     
-    // Lock cursor tracking for the first 2.0s, then smoothly ease tracking in over 0.6s
+    // 1. Smoothly ramp tracking weight over the first 2 seconds
     trackingClock.current = Math.min(trackingClock.current + Math.min(delta, 0.05), 3.0)
     const trackWeight = THREE.MathUtils.smoothstep(trackingClock.current, 2.0, 2.6)
 
-    const pointerX = mouseState.current.x * trackWeight
-    const pointerY = mouseState.current.y * trackWeight
+    // Raw mouse for procedural arm sway & breathing
+    const mouseX = mouseState.current.x
+    const mouseY = mouseState.current.y
+
+    // Gated mouse strictly for head/body tracking look-at rotation
+    const pointerX = mouseX * trackWeight
+    const pointerY = mouseY * trackWeight
 
     mouseState.current.energy = THREE.MathUtils.lerp(mouseState.current.energy, 0, 0.04)
     mouseState.current.velX = THREE.MathUtils.lerp(mouseState.current.velX, 0, 0.1)
     mouseState.current.velY = THREE.MathUtils.lerp(mouseState.current.velY, 0, 0.1)
-    const energy = mouseState.current.energy * trackWeight
+    const energy = mouseState.current.energy
 
     const {
       head,
