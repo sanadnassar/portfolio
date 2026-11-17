@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useEffect } from 'react'
 import { useGLTF } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
@@ -7,20 +7,39 @@ export function Model(props) {
   const { nodes, materials } = useGLTF('/model.glb')
   const headRef = useRef()
 
-  useFrame((state) => {
+  const mousePos = useRef({ x: 0, y: 0 })
+
+  useEffect(() => {
+    const handlePointerMove = (event) => {
+      const x = (event.clientX / window.innerWidth) * 2 - 1
+      const y = -(event.clientY / window.innerHeight) * 2 + 1
+      mousePos.current = { x, y }
+    }
+
+    window.addEventListener('pointermove', handlePointerMove)
+    return () => window.removeEventListener('pointermove', handlePointerMove)
+  }, [])
+
+  useFrame(() => {
     if (!headRef.current) return
 
-    // +X pointer turns head right (+Y rotation); +Y pointer tilts head up (-X rotation)
-    const targetY = state.pointer.x * 0.5
-    const targetX = -(state.pointer.y * 0.4)
+    if (headRef.current.rotation.order !== 'YXZ') {
+      headRef.current.rotation.order = 'YXZ'
+    }
 
-    headRef.current.rotation.y = THREE.MathUtils.lerp(headRef.current.rotation.y, targetY, 0.08)
-    headRef.current.rotation.x = THREE.MathUtils.lerp(headRef.current.rotation.x, targetX, 0.08)
+    const pointerX = mousePos.current.x
+    const pointerY = mousePos.current.y
+
+    const targetY = pointerX < 0 ? pointerX * 0.7 : pointerX * 0.3
+    const targetX = -(pointerY * 0.4)
+
+    headRef.current.rotation.y = THREE.MathUtils.lerp(headRef.current.rotation.y, targetY, 0.1)
+    headRef.current.rotation.x = THREE.MathUtils.lerp(headRef.current.rotation.x, targetX, 0.1)
   })
 
   return (
     <group {...props} dispose={null}>
-      <group position={[0.23, 0.237, 0.145]}>
+      <group position={[0, 0.237, 0.145]}>
         
         {/* STATIC BASE: Black glossy neck and shoulders stay locked in place */}
         <mesh geometry={nodes.Object_5.geometry} material={materials['Material.Black']} />

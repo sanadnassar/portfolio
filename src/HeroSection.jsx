@@ -5,8 +5,6 @@ import { Model } from './Model'
 export default function HeroSection() {
   return (
     <section className="relative w-full h-screen bg-black text-white overflow-hidden">
-      
-      {/* 3D Canvas Layer */}
       <div className="absolute inset-0 z-0">
         <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
           <ambientLight intensity={0.5} />
@@ -19,27 +17,31 @@ export default function HeroSection() {
         </Canvas>
       </div>
 
-      {/* Foreground Hero Content Layer */}
       <div className="absolute inset-0 z-10 flex flex-col justify-center px-8 md:px-24 pointer-events-none">
         <div className="max-w-2xl text-left pointer-events-auto">
-          
-          {/* Greeting */}
-          <p className="text-gray-400 font-mono text-lg md:text-xl tracking-wide mb-2">
+
+          <p className="text-gray-400 font-mono text-sm md:text-base tracking-wide mb-2">
             Hi there, I'm
           </p>
 
-          {/* Main Name */}
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-white mb-6">
-            Sanad Nassar
-          </h1>
+          <div className="flex flex-col mb-5">
+            <h1 className="text-5xl md:text-[120px] ml-[-16px] font-light font-thin tracking-tight text-gray-300">
+              Sanad
+            </h1>
+            <h1 className="text-5xl md:text-[120px] mt-[-18px] -ml-[10px] font-bold tracking-tight text-white">
+              Nassar
+            </h1>
+          </div>
 
-          {/* Subtitle / Bio */}
-          <p className="text-lg md:text-xl text-gray-400 leading-relaxed mb-8 max-w-xl">
-            I build and deploy full-stack applications, focusing on backend development and artifical intelligence.
+          <div className="inline-flex items-center px-3 py-1.5 mb-2 ml[-2px] rounded-none bg-white/5 border border-white/10 text-xs font-mono text-gray-400 backdrop-blur-sm">
+            CS & SOFTWARE ENGINEERING
+          </div>
+
+          <p className="text-gray-400 w-[470px] font-mono text-sm md:text-base tracking-wide mb-3">
+            I build and deploy full-stack applications, focusing on backend development and artificial intelligence. I'm currently studying Computer Science at Western University.
           </p>
           
-          {/* Action Buttons */}
-          <div className="flex flex-wrap items-center gap-4">
+          <div className="flex flex-wrap items-center ml-[-6px] gap-4">
             <a 
               href="#projects" 
               className="px-6 py-3 bg-white text-black font-medium text-sm rounded-full hover:bg-gray-200 transition-all flex items-center group"
