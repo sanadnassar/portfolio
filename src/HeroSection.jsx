@@ -19,15 +19,41 @@ export default function HeroSection() {
         </Canvas>
       </div>
 
-      {/* Foreground UI Layer */}
+      {/* Foreground Hero Content Layer */}
       <div className="absolute inset-0 z-10 flex flex-col justify-center px-8 md:px-24 pointer-events-none">
-        <div className="max-w-2xl text-left">
+        <div className="max-w-2xl text-left pointer-events-auto">
+          
+          {/* Greeting */}
+          <p className="text-gray-400 font-mono text-lg md:text-xl tracking-wide mb-2">
+            Hi there, I'm
+          </p>
+
+          {/* Main Name */}
           <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-white mb-6">
             Sanad Nassar
           </h1>
-          <p className="text-xl text-gray-400 leading-relaxed">
-            Honors Computer Science & Software Engineering. Architecting scalable systems, AI-driven applications, and interactive digital experiences.
+
+          {/* Subtitle / Bio */}
+          <p className="text-lg md:text-xl text-gray-400 leading-relaxed mb-8 max-w-xl">
+            I build and deploy full-stack applications, focusing on backend development and artifical intelligence.
           </p>
+          
+          {/* Action Buttons */}
+          <div className="flex flex-wrap items-center gap-4">
+            <a 
+              href="#projects" 
+              className="px-6 py-3 bg-white text-black font-medium text-sm rounded-full hover:bg-gray-200 transition-all flex items-center group"
+            >
+              View My Work
+              <span className="ml-2 group-hover:translate-x-1 transition-transform">→</span>
+            </a>
+            <a 
+              href="#contact" 
+              className="px-6 py-3 bg-white/10 text-white border border-white/20 font-medium text-sm rounded-full hover:bg-white/20 transition-all backdrop-blur-sm"
+            >
+              Get in Touch
+            </a>
+          </div>
         </div>
       </div>
       
