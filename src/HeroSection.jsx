@@ -132,7 +132,7 @@ export default function HeroSection({ uiVisible, onRevealUI }) {
       </div>
 
       {/* Foreground Hero Content Layer */}
-      <div className="relative z-10 h-full flex flex-col justify-start px-8 md:px-24 pt-[20vh] pointer-events-none">
+      <div className="relative z-10 h-full flex flex-col justify-start px-8 md:px-24 pt-[24vh] pointer-events-none">
         <div className="max-w-2xl text-left pointer-events-auto">
           <p
             style={{ animationDelay: '0ms' }}
