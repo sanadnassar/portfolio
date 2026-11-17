@@ -5,19 +5,21 @@ import { Model } from './Model'
 export default function HeroSection() {
   return (
     <section className="relative w-full h-screen bg-black text-white overflow-hidden">
+      {/* 3D Canvas Layer */}
       <div className="absolute inset-0 z-0">
         <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
-          <ambientLight intensity={0.5} />
+          <ambientLight intensity={0.6} />
           <directionalLight position={[10, 10, 5]} intensity={2} />
           <Environment preset="city" />
           
           <Float speed={2} rotationIntensity={0.1} floatIntensity={0.3}>
-            <Model position={[2.25, -0.8, 0]} scale={3.85} rotation={[0, -0.5, 0]}/>
+            <Model position={[1.8, -0.2, 0]} rotation={[0, -0.3, 0]} />
           </Float>
         </Canvas>
       </div>
 
-      <div className="absolute inset-0 z-10 flex flex-col justify-center px-8 md:px-24 pointer-events-none">
+      {/* Foreground Hero Content Layer */}
+      <div className="relative z-10 h-full flex flex-col justify-start px-8 md:px-24 pt-32 pointer-events-none">
         <div className="max-w-2xl text-left pointer-events-auto">
 
           <p className="text-gray-400 font-mono text-sm md:text-base tracking-wide mb-2">
@@ -25,7 +27,7 @@ export default function HeroSection() {
           </p>
 
           <div className="flex flex-col mb-5">
-            <h1 className="text-5xl md:text-[120px] ml-[-16px] font-light font-thin tracking-tight text-gray-300">
+            <h1 className="text-5xl md:text-[120px] ml-[-16px] font-thin tracking-tight text-gray-300">
               Sanad
             </h1>
             <h1 className="text-5xl md:text-[120px] mt-[-18px] -ml-[10px] font-bold tracking-tight text-white">
@@ -33,11 +35,11 @@ export default function HeroSection() {
             </h1>
           </div>
 
-          <div className="inline-flex items-center px-3 py-1.5 mb-2 ml[-2px] rounded-none bg-white/5 border border-white/10 text-xs font-mono text-gray-400 backdrop-blur-sm">
+          <div className="inline-flex items-center px-3 py-1.5 mb-2 ml-[-2px] rounded-none bg-white/5 border border-white/10 text-xs font-mono text-gray-400 backdrop-blur-sm">
             CS & SOFTWARE ENGINEERING
           </div>
 
-          <p className="text-gray-400 w-[470px] font-mono text-sm md:text-base tracking-wide mb-3">
+          <p className="text-gray-400 max-w-[470px] font-mono text-sm md:text-base tracking-wide mb-3">
             I build and deploy full-stack applications, focusing on backend development and artificial intelligence. I'm currently studying Computer Science at Western University.
           </p>
           
