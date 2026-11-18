@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import HeroSection from './HeroSection'
 import Navbar from './Navbar'
 import ProjectCarousel from './ProjectCarousel'
+import SkillsSection from './SkillsSection'
 
 function App() {
   const [uiVisible, setUiVisible] = useState(false)
@@ -37,6 +38,7 @@ function App() {
         onRevealUI={() => setUiVisible(true)}
       />
       <ProjectCarousel />
+      <SkillsSection />
     </main>
   )
 }
