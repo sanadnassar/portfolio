@@ -103,7 +103,7 @@ export default function HeroSection({ uiVisible, onRevealUI }) {
   return (
     <section className="relative w-full h-screen bg-black text-white overflow-hidden">
       {/* 3D Scene Layer */}
-      <div className="absolute inset-0 z-0">
+      <div id="about" className="absolute inset-0 z-0">
         <Canvas camera={{ position: [1.75, 0.58, 0.35], fov: 42, near: 0.01 }}>
           <CameraIntroRig
             started={zoomStarted}
@@ -170,7 +170,7 @@ export default function HeroSection({ uiVisible, onRevealUI }) {
               uiVisible ? 'animate-hero-up' : 'opacity-0'
             }`}
           >
-            I build and deploy full-stack applications, focusing on backend development and artificial intelligence. I'm currently studying Computer Science at Western University.
+            I build and deploy full-stack applications, focusing on backend development and artificial intelligence. I'm currently in my third year of Computer Science at Western University.
           </p>
 
           <div
