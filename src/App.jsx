@@ -3,6 +3,7 @@ import HeroSection from './HeroSection'
 import Navbar from './Navbar'
 import ProjectCarousel from './ProjectCarousel'
 import SkillsSection from './SkillsSection'
+import ContactSection from './ContactSection'
 
 function App() {
   const [uiVisible, setUiVisible] = useState(false)
@@ -18,32 +19,19 @@ function App() {
   }, [])
 
   useEffect(() => {
-    const handleSelectStart = () => document.body.classList.add('selecting-text')
-    const handleMouseUp = () => document.body.classList.remove('selecting-text')
-
-    document.addEventListener('selectstart', handleSelectStart)
-    window.addEventListener('mouseup', handleMouseUp)
+    if (!uiVisible) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
 
     return () => {
-      document.removeEventListener('selectstart', handleSelectStart)
-      window.removeEventListener('mouseup', handleMouseUp)
-    }
-  }, [])
-
-  useEffect(() => {
-  if (!uiVisible) {
-    document.body.style.overflow = 'hidden'
-  } else {
-    document.body.style.overflow = ''
-  }
-
-  return () => {
       document.body.style.overflow = ''
     }
   }, [uiVisible])
 
   return (
-    <main className="bg-black min-h-screen">
+    <main className="bg-black min-h-screen select-none cursor-default">
       <Navbar visible={uiVisible} />
       <HeroSection
         uiVisible={uiVisible}
@@ -51,6 +39,7 @@ function App() {
       />
       <ProjectCarousel />
       <SkillsSection />
+      <ContactSection />
     </main>
   )
 }

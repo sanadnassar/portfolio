@@ -121,7 +121,7 @@ export default function SkillsSection() {
         transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
         className="w-full pl-8 md:pl-[200px] pr-8 md:pr-16 mb-20"
       >
-        <div className="w-full h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
+        <div id="skills" className="w-full h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
       </motion.div>
 
       {/* Section Header matching ProjectCarousel header alignment */}
@@ -136,7 +136,7 @@ export default function SkillsSection() {
           <h2 className="text-4xl md:text-5xl font-thin text-gray-300 tracking-tight">
             Technical
           </h2>
-          <h2 id="skills" className="text-4xl md:text-5xl font-bold text-white tracking-tight">
+          <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight">
             Skills
           </h2>
         </div>
