@@ -2,7 +2,7 @@ export const PROJECTS_DATA = [
   {
     id: 'repright',
     title: 'RepRight',
-    subtitle: 'Artifical Intelligence Fitness App',
+    subtitle: 'Artificial Intelligence Fitness App',
     description:
       'Squat exercise form analyzer built using Computer Vision, Streamlit for frontend and a Random Forest Classifier to evaluate exercise form in real time. ',
     metrics: [

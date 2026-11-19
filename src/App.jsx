@@ -30,6 +30,18 @@ function App() {
     }
   }, [])
 
+  useEffect(() => {
+  if (!uiVisible) {
+    document.body.style.overflow = 'hidden'
+  } else {
+    document.body.style.overflow = ''
+  }
+
+  return () => {
+      document.body.style.overflow = ''
+    }
+  }, [uiVisible])
+
   return (
     <main className="bg-black min-h-screen">
       <Navbar visible={uiVisible} />

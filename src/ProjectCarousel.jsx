@@ -1,10 +1,12 @@
-import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useState, useRef } from 'react'
+import { motion, AnimatePresence, useInView } from 'framer-motion'
 import { PROJECTS_DATA, EXPERIENCE_DATA } from './projectsData'
 
 export default function ProjectCarousel() {
   const [activeTab, setActiveTab] = useState('projects')
   const [currentIndex, setCurrentIndex] = useState(0)
+  const stageRef = useRef(null)
+  const isInView = useInView(stageRef, { once: true, amount: 0.2 })
 
   const items = activeTab === 'projects' ? PROJECTS_DATA : EXPERIENCE_DATA
 
@@ -27,10 +29,10 @@ export default function ProjectCarousel() {
   }
 
   const cardVariants = {
-    active: { x: '0%', scale: 1, opacity: 1, zIndex: 20, filter: 'blur(0px)' },
-    prev: { x: '-65%', scale: 0.88, opacity: 0.35, zIndex: 10, filter: 'blur(2px)' },
-    next: { x: '65%', scale: 0.88, opacity: 0.35, zIndex: 10, filter: 'blur(2px)' },
-    hidden: { scale: 0.85, opacity: 0, zIndex: 0, filter: 'blur(10px)' },
+    active: { x: '0%', y: 0, scale: 1, opacity: 1, zIndex: 20, filter: 'none' },
+    prev: { x: '-65%', y: 0, scale: 0.88, opacity: 0.45, zIndex: 10, filter: 'blur(1px)' },
+    next: { x: '65%', y: 0, scale: 0.88, opacity: 0.45, zIndex: 10, filter: 'blur(1px)' },
+    hidden: { y: 32, scale: 0.85, opacity: 0, zIndex: 0, filter: 'blur(10px)' },
     exit: { scale: 0.85, opacity: 0, zIndex: 0, filter: 'blur(10px)' },
   }
 
@@ -57,7 +59,7 @@ export default function ProjectCarousel() {
         className="w-full pl-8 md:pl-[200px] pr-8 md:pr-60 flex flex-col sm:flex-row sm:items-end justify-between mb-16 z-30 scroll-mt-24"
       >
         <div>
-          {/* Option 2 Toggle: Interactive HUD Track Tabs */}
+          {/* Interactive HUD Track Tabs */}
           <div className="inline-flex items-center gap-6 mb-5 border-b border-white/[0.08]">
             {['projects', 'experience'].map((tab) => {
               const isActive = activeTab === tab
@@ -111,12 +113,9 @@ export default function ProjectCarousel() {
         </div>
       </motion.div>
 
-        {/* Carousel Stage */}
-      <motion.div
-        initial={{ opacity: 0, y: 32 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 0.8, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+      {/* Carousel Stage — uses useInView to animate cards directly without parent opacity */}
+      <div
+        ref={stageRef}
         className="relative w-full max-w-6xl h-[430px] flex items-center justify-center z-10 px-4"
       >
         <AnimatePresence mode="wait">
@@ -129,15 +128,14 @@ export default function ProjectCarousel() {
                 key={item.id}
                 variants={cardVariants}
                 initial="hidden"
-                animate={position}
+                animate={isInView ? position : 'hidden'}
                 exit="exit"
-                transition={{ duration: 0.30, ease: [0.32, 0.72, 0, 1] }}
+                transition={{ duration: 0.45, ease: [0.32, 0.72, 0, 1] }}
                 onClick={() => isSideCard && setCurrentIndex(index)}
-                className={`absolute top-0 w-full max-w-2xl h-full bg-zinc-900/60 backdrop-blur-xl border border-white/10 rounded-2xl p-8 md:p-10 flex flex-col justify-between overflow-hidden shadow-2xl ${
-                  isSideCard ? 'cursor-pointer hover:border-white/20' : ''
+                className={`absolute top-0 w-full max-w-2xl h-full select-none bg-zinc-900/60 backdrop-blur-md border border-white/15 rounded-2xl p-8 md:p-10 flex flex-col justify-between overflow-hidden shadow-2xl ${
+                  isSideCard ? 'cursor-pointer hover:border-white/25' : ''
                 }`}
               >
-                <div className="absolute -top-24 -left-24 w-72 h-72 bg-white/[0.04] rounded-full blur-3xl pointer-events-none" />
                 <div className="relative z-10 flex items-center justify-between mb-6">
                   <span className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-[11px] font-mono text-gray-300">
                     {item.subtitle}
@@ -197,7 +195,7 @@ export default function ProjectCarousel() {
             )
           })}
         </AnimatePresence>
-      </motion.div>
+      </div>
     </section>
   )
 }
