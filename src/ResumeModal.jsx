@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 
-const RESUME_URL = '/resume.pdf'
+const RESUME_URL = './resume.pdf'
 
 export default function ResumeModal({ isOpen, onClose }) {
   useEffect(() => {

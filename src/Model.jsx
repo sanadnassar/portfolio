@@ -60,7 +60,7 @@ export function Model(props) {
     energy: 0,
   })
 
-  const { scene, animations } = useGLTF('/model.glb')
+  const { scene, animations } = useGLTF('./model.glb')
   const { actions, names } = useAnimations(animations, groupRef)
 
   const customMaterials = useMemo(() => {
@@ -545,4 +545,4 @@ export function Model(props) {
   )
 }
 
-useGLTF.preload('/model.glb')
+useGLTF.preload('./model.glb')

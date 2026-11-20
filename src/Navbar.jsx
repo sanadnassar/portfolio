@@ -11,7 +11,7 @@ export default function Navbar({ visible, onOpenResume }) {
         <a href="#skills" className="hover:text-white transition-colors">SKILLS</a>
         <a href="#contact" className="hover:text-white transition-colors">CONTACT</a>
         <a
-          href="/resume.pdf"
+          href="./resume.pdf"
           target="_blank"
           rel="noreferrer"
           onClick={onOpenResume}

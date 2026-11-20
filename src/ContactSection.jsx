@@ -6,7 +6,7 @@ const EMAIL = 'sanadnassar111@gmail.com'
 const SOCIAL_LINKS = [
   { label: 'GITHUB', href: 'https://github.com/sanadnassar' },
   { label: 'LINKEDIN', href: 'https://www.linkedin.com/in/sanadnassar' },
-  { label: 'RESUME', href: '/resume.pdf' },
+  { label: 'RESUME', href: './resume.pdf' },
 ]
 
 export default function ContactSection({ onOpenResume }) {
