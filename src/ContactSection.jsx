@@ -25,7 +25,7 @@ export default function ContactSection() {
   return (
     <section
       id="contact"
-      className="relative w-full min-h-screen pt-36 md:pt-48 pb-6 bg-black flex flex-col items-center overflow-hidden scroll-mt-24"
+      className="relative w-full pt-36 md:pt-64 pb-6 bg-black flex flex-col items-center overflow-hidden scroll-mt-24"
     >
       {/* Centered Ambient Radial Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[520px] h-[520px] bg-white/[0.03] rounded-full blur-3xl pointer-events-none" />
@@ -40,7 +40,7 @@ export default function ContactSection() {
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="flex flex-col items-center text-center px-6 mb-12"
         >
-          <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 mb-6 rounded-full bg-white/[0.04] border border-white/10">
+          <div className="inline-flex items-center gap-2.5 mb-6">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
@@ -121,9 +121,18 @@ export default function ContactSection() {
           ))}
         </div>
 
-        <p className="md:absolute md:right-10 pb-2.5 text-[11px] font-mono text-zinc-600 tracking-wider">
-          © {new Date().getFullYear()} SANAD NASSAR
-        </p>
+        <div className="md:absolute md:right-10 flex items-center gap-3 text-[11px] font-mono text-zinc-600 tracking-wider">
+          <a
+            href="https://github.com/sanadnassar/portfolio"
+            target="_blank"
+            rel="noreferrer"
+            className="hover:text-zinc-300 transition-colors duration-200"
+          >
+            SOURCE ↗
+          </a>
+          <span className="text-zinc-800">/</span>
+          <span>© {new Date().getFullYear()} SANAD NASSAR</span>
+        </div>
       </motion.div>
     </section>
   )
