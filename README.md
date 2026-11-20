@@ -1,4 +1,4 @@
-# Sanad Nassar — Portfolio
+# Sanad Nassar's Portfolio
 
 My personal developer portfolio built with React, Three.js, Framer Motion, and Tailwind CSS.
 
