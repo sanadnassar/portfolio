@@ -4,9 +4,11 @@ import Navbar from './Navbar'
 import ProjectCarousel from './ProjectCarousel'
 import SkillsSection from './SkillsSection'
 import ContactSection from './ContactSection'
+import ResumeModal from './ResumeModal'
 
 function App() {
   const [uiVisible, setUiVisible] = useState(false)
+  const [isResumeOpen, setIsResumeOpen] = useState(false)
 
   useEffect(() => {
     if ('scrollRestoration' in window.history) {
@@ -30,16 +32,27 @@ function App() {
     }
   }, [uiVisible])
 
+  const handleOpenResume = (e) => {
+    if (window.innerWidth >= 768) {
+      e.preventDefault()
+      setIsResumeOpen(true)
+    }
+  }
+
   return (
     <main className="bg-black min-h-screen select-none cursor-default">
-      <Navbar visible={uiVisible} />
+      <Navbar visible={uiVisible} onOpenResume={handleOpenResume} />
       <HeroSection
         uiVisible={uiVisible}
         onRevealUI={() => setUiVisible(true)}
       />
       <ProjectCarousel />
       <SkillsSection />
-      <ContactSection />
+      <ContactSection onOpenResume={handleOpenResume} />
+      <ResumeModal
+        isOpen={isResumeOpen}
+        onClose={() => setIsResumeOpen(false)}
+      />
     </main>
   )
 }

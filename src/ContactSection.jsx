@@ -6,10 +6,10 @@ const EMAIL = 'sanadnassar111@gmail.com'
 const SOCIAL_LINKS = [
   { label: 'GITHUB', href: 'https://github.com/sanadnassar' },
   { label: 'LINKEDIN', href: 'https://www.linkedin.com/in/sanadnassar' },
-  { label: 'RESUME', href: '/Sanad_Nassar_Resume.pdf' },
+  { label: 'RESUME', href: '/resume.pdf' },
 ]
 
-export default function ContactSection() {
+export default function ContactSection({ onOpenResume }) {
   const [copied, setCopied] = useState(false)
 
   const handleCopy = async () => {
@@ -113,6 +113,7 @@ export default function ContactSection() {
               href={link.href}
               target="_blank"
               rel="noreferrer"
+              onClick={link.label === 'RESUME' ? onOpenResume : undefined}
               className="group relative pb-2.5 border-b border-white/[0.08] text-xs font-mono text-zinc-400 hover:text-white tracking-[0.22em] transition-colors duration-300"
             >
               <span>{link.label}</span>
