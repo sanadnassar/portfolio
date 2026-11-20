@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 
-const EMAIL = 'sanadnassar111@gmail.com'
 
+const EMAIL = 'sanadnassar111@gmail.com'
 const SOCIAL_LINKS = [
   { label: 'GITHUB', href: 'https://github.com/sanadnassar' },
   { label: 'LINKEDIN', href: 'https://www.linkedin.com/in/sanadnassar' },
@@ -27,12 +27,8 @@ export default function ContactSection({ onOpenResume }) {
       id="contact"
       className="relative w-full pt-36 md:pt-64 pb-6 bg-black flex flex-col items-center overflow-hidden scroll-mt-24"
     >
-      {/* Centered Ambient Radial Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[520px] h-[520px] bg-white/[0.03] rounded-full blur-3xl pointer-events-none" />
-
-      {/* Main Content Wrapper — centers ONLY the Header + Command Bar */}
       <div className="relative z-10 flex-1 flex flex-col items-center justify-center w-full">
-        {/* Centerpiece Header */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -49,7 +45,6 @@ export default function ContactSection({ onOpenResume }) {
               Open to Opportunities
             </span>
           </div>
-
           <div className="flex items-baseline gap-3 mb-4">
             <h2 className="text-4xl md:text-6xl font-thin text-gray-300 tracking-tight">
               Get in
@@ -63,8 +58,6 @@ export default function ContactSection({ onOpenResume }) {
             Have a role, project, or opportunity in mind? Feel free to reach out to me!
           </p>
         </motion.div>
-
-        {/* Frosted-Glass Command Bar */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -73,12 +66,9 @@ export default function ContactSection({ onOpenResume }) {
           className="w-full max-w-2xl px-4"
         >
           <div className="select-text cursor-text w-full bg-zinc-900/60 backdrop-blur-xl border border-white/15 hover:border-white/25 transition-colors duration-300 rounded-2xl sm:rounded-full p-2.5 sm:pl-7 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-2xl">
-            {/* Selectable Email */}
             <span className="cursor-text selection:bg-white selection:text-black font-mono text-sm md:text-base text-gray-200 tracking-wide py-2 sm:py-0">
               {EMAIL}
             </span>
-
-            {/* Action Buttons — locked back to select-none & custom cursor */}
             <div className="select-none flex items-center gap-2 w-full sm:w-auto">
               <button
                 onClick={handleCopy}
@@ -86,7 +76,6 @@ export default function ContactSection({ onOpenResume }) {
               >
                 {copied ? 'Copied ✓' : 'Copy'}
               </button>
-
               <a
                 href={`mailto:${EMAIL}`}
                 className="flex-1 sm:flex-none px-5 py-2.5 rounded-xl sm:rounded-full bg-white text-black hover:bg-zinc-200 text-xs font-mono font-medium transition-colors duration-200 inline-flex items-center justify-center"
@@ -97,8 +86,6 @@ export default function ContactSection({ onOpenResume }) {
           </div>
         </motion.div>
       </div>
-
-      {/* Bottom Row — outside flex-1 so it pins to the very bottom */}
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -121,7 +108,6 @@ export default function ContactSection({ onOpenResume }) {
             </a>
           ))}
         </div>
-
         <div className="md:absolute md:right-10 flex items-center gap-3 text-[11px] font-mono text-zinc-600 tracking-wider">
           <a
             href="https://github.com/sanadnassar/portfolio"
@@ -129,7 +115,7 @@ export default function ContactSection({ onOpenResume }) {
             rel="noreferrer"
             className="hover:text-zinc-300 transition-colors duration-200"
           >
-            SOURCE ↗
+            SOURCE CODE ↗
           </a>
           <span className="text-zinc-800">/</span>
           <span>© {new Date().getFullYear()} SANAD NASSAR</span>

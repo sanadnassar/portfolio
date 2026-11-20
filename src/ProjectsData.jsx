@@ -4,7 +4,7 @@ export const PROJECTS_DATA = [
     title: 'RepRight',
     subtitle: 'Artificial Intelligence Fitness App',
     description:
-      'Squat exercise form analyzer built using Computer Vision, Streamlit for frontend and a Random Forest Classifier to evaluate exercise form in real time. ',
+      'Squat exercise form analyzer built using Computer Vision, Streamlit for frontend and a Random Forest Classifier to evaluate your exercise form in real time.',
     metrics: [
       { label: 'Domain', value: 'Health and Fitness' },
       { label: 'Architecture', value: 'ML-Pipeline' },
@@ -32,7 +32,7 @@ export const PROJECTS_DATA = [
     title: 'SyncAid',
     subtitle: 'Hackathon Finalist Project',
     description:
-      'AI-powered healthcare triage and scheduling platform designed to prevent missed appointments, prioritize high-risk patients, and dynamically adapt clinic schedules in real time.',
+      'An AI-powered healthcare triage and scheduling platform designed to prevent missed appointments, prioritize high-risk patients, and dynamically adapt clinic schedules in real time.',
     metrics: [
       { label: 'Domain', value: 'Healthcare' },
       { label: 'Architecture', value: 'Frontend' },
@@ -43,17 +43,18 @@ export const PROJECTS_DATA = [
   },
   {
     id: 'datavalidator',
-    title: 'DataValidator',
+    title: 'Data Validation Tool',
     subtitle: 'Automated Database Validation',
     description:
       'Automated database validation pipeline built with Python, Pandas, and SQL to verify schema integrity, flag data anomalies, and generate reports across enterprise datasets.',
     metrics: [
       { label: 'Domain', value: 'Data Engineering' },
       { label: 'Architecture', value: 'Client-Server' },
-      { label: 'Highlight', value: 'Quality Assurance' },
+      { label: 'Highlight', value: 'Report Generation' },
     ],
-    tech: ['Pandas', 'Pyodbc', 'SQL'],
-    github: 'https://github.com/sanadnassar',
+    tech: ['Python', 'Pyodbc', 'SQL'],
+    github: null,
+    isPrivate: true,
   },
   {
     id: 'paywallet',
@@ -93,7 +94,7 @@ export const EXPERIENCE_DATA = [
     description:
       "Collaborated with the Western Engineering Autopilot web development team to design, build, and deploy the club’s official responsive web platform to showcase our autonomous driving project.",
     metrics: [
-      { label: 'Domain', value: 'Autonomous Robotics' },
+      { label: 'Domain', value: 'Frontend Development' },
       { label: 'From', value: 'September 2025' },
       { label: 'To', value: 'April 2026' },
     ],

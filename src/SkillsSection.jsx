@@ -1,5 +1,6 @@
 import { motion, useMotionTemplate, useMotionValue } from 'framer-motion'
 
+
 const BENTO_ASYMMETRIC = [
   {
     title: 'LANGUAGES',
@@ -59,7 +60,6 @@ function SkillCard({ group, index }) {
       onMouseMove={handleMouseMove}
       className={`${group.span} select-none bg-zinc-900/60 backdrop-blur-xl border border-white/10 rounded-2xl p-8 md:p-10 flex flex-col justify-between group hover:border-white/25 transition-colors duration-300 shadow-2xl relative overflow-hidden`}
     >
-      {/* 1. Ambient drifting glow (moves slowly on its own) */}
       <motion.div
         animate={{
           x: ['-15%', '55%', '20%', '-15%'],
@@ -72,13 +72,10 @@ function SkillCard({ group, index }) {
         }}
         className="absolute -top-24 -left-24 w-72 h-72 bg-white/[0.045] rounded-full blur-3xl pointer-events-none z-0"
       />
-
-      {/* 2. Interactive cursor-tracking spotlight */}
       <motion.div
         style={{ background: spotlight }}
         className="pointer-events-none absolute inset-0 w-full h-full rounded-2xl z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
       />
-
       <div className="relative z-10">
         <div className="flex justify-between items-start mb-8">
           <div>
@@ -91,7 +88,6 @@ function SkillCard({ group, index }) {
           </div>
           <span className="font-mono text-xs text-zinc-600">0{index + 1}</span>
         </div>
-
         <div className="flex flex-wrap gap-2">
           {group.skills.map((skill) => (
             <span
@@ -110,10 +106,7 @@ function SkillCard({ group, index }) {
 export default function SkillsSection() {
   return (
     <section className="relative w-full py-28 bg-black flex flex-col items-center justify-center overflow-hidden">
-      {/* Background ambient glow matching carousel style */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-white/[0.02] rounded-full blur-3xl pointer-events-none" />
-
-      {/* Subtle Top Gradient Divider aligned with header padding */}
       <motion.div
         initial={{ opacity: 0, scaleX: 0.6 }}
         whileInView={{ opacity: 1, scaleX: 1 }}
@@ -124,7 +117,6 @@ export default function SkillsSection() {
         <div id="skills" className="w-full h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
       </motion.div>
 
-      {/* Section Header matching ProjectCarousel header alignment */}
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -142,7 +134,6 @@ export default function SkillsSection() {
         </div>
       </motion.div>
 
-      {/* Bento Grid Container matching max-w-6xl structure */}
       <motion.div
         initial={{ opacity: 0, y: 32 }}
         whileInView={{ opacity: 1, y: 0 }}

@@ -3,13 +3,13 @@ import { useGLTF, useAnimations, Center, Resize } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 
-// Reusable quaternions to avoid garbage collection in useFrame
+
 const _qForward = new THREE.Quaternion()
 const _qOutward = new THREE.Quaternion()
 const _qTarget = new THREE.Quaternion()
 const _worldPos = new THREE.Vector3()
 
-// Fine diagonal carbon-fiber weave for the matte charcoal Body armor
+
 function createCarbonFiberTexture() {
   const canvas = document.createElement('canvas')
   canvas.width = 16
@@ -63,11 +63,8 @@ export function Model(props) {
   const { scene, animations } = useGLTF('/model.glb')
   const { actions, names } = useAnimations(animations, groupRef)
 
-  // Multi-Tier Monochrome Materials
   const customMaterials = useMemo(() => {
     const carbonTex = createCarbonFiberTexture()
-
-    // 1. HEAD: Seamless liquid-black mirror chrome dome ONLY
     const head = new THREE.MeshPhysicalMaterial({
       name: 'Head',
       color: new THREE.Color('#020202'),
@@ -79,7 +76,6 @@ export function Model(props) {
       envMapIntensity: 2.2,
     })
 
-    // 2. PARTS: Dark machined joints and pistons
     const parts = new THREE.MeshPhysicalMaterial({
       name: 'Parts',
       color: new THREE.Color('#050505'),
@@ -90,7 +86,6 @@ export function Model(props) {
       envMapIntensity: 1.3,
     })
 
-    // 3. BODY: Satin Dark Carbon-Fiber Armor (Torso, Shoulders, Arms, Forearms, Legs)
     const body = new THREE.MeshPhysicalMaterial({
       name: 'Body',
       color: new THREE.Color('#141416'),
@@ -181,9 +176,6 @@ export function Model(props) {
     fullRobotBox.getSize(robotSize)
     fullRobotBox.getCenter(robotCenter)
 
-    // =========================================================
-    // PASS 1: MAP SKELETON (PURE SPATIAL LEFT vs RIGHT SPLIT)
-    // =========================================================
     scene.traverse((child) => {
       if (!child.userData.initRot) {
         child.userData.initRot = child.rotation.clone()
@@ -201,22 +193,20 @@ export function Model(props) {
         rigRefs.current.torso = child
       }
 
-      // Check for Upper Arm, Forearm, and Hand nodes
       if (/(arm|shoulder|clavicle|bicep|forearm|elbow|hand|wrist|palm)/i.test(nameLower)) {
-        // Ignore individual finger phalanges so we grab the whole hand group
         if (/finger|thumb|index|middle|ring|pinky/i.test(nameLower)) return
 
         const partBox = getSceneBox(child)
+
         if (partBox.isEmpty()) return
 
         const partCenter = new THREE.Vector3()
         partBox.getCenter(partCenter)
-
-        // Strictly separate Screen-Left (-X) vs Screen-Right (+X) by physical coordinate
         const isScreenLeft = partCenter.x < robotCenter.x - robotSize.x * 0.06
         const isScreenRight = partCenter.x > robotCenter.x + robotSize.x * 0.06
-        if (!isScreenLeft && !isScreenRight) return
 
+        if (!isScreenLeft && !isScreenRight) return
+        
         const isHand = /hand|wrist|palm/i.test(nameLower)
         const isForearm = !isHand && /forearm|lower.*arm|arm.*lower|elbow/i.test(nameLower)
         const isUpperArm = !isHand && !isForearm
@@ -241,7 +231,6 @@ export function Model(props) {
       }
     })
 
-    // Spatial fallback if either arm or child segment uses generic group names
     ;['left', 'right'].forEach((side) => {
       const sideSign = side === 'left' ? -1 : 1
       const armKey = `${side}Arm`
@@ -270,7 +259,6 @@ export function Model(props) {
         })
       }
 
-      // Auto-discover Forearm and Hand inside the Arm hierarchy if not matched by name
       const armNode = rigRefs.current[armKey]
       if (armNode) {
         const armBox = getSceneBox(armNode)
@@ -308,9 +296,6 @@ export function Model(props) {
       }
     })
 
-    // =========================================================
-    // CALIBRATE EXACT FRONT (+Z) & OUTWARD (±X) AXES PER LIMB
-    // =========================================================
     const calibrateLimbAxes = (node, sideSign) => {
       if (!node) return
       node.updateWorldMatrix(true, true)
@@ -323,7 +308,6 @@ export function Model(props) {
         .setFromMatrixPosition(node.matrixWorld)
         .applyMatrix4(invSceneMatrix)
 
-      // Pick a reference point below the joint pivot so we can measure which way the limb swings
       const testPointScene = centerScene.clone()
       if (testPointScene.distanceTo(pivotScene) < 0.02) {
         testPointScene.y -= 0.2
@@ -349,13 +333,9 @@ export function Model(props) {
         deltas.push(movedScene.sub(restScene).divideScalar(eps))
       })
 
-      // Restore rest pose
       node.quaternion.copy(initQ)
       node.updateMatrixWorld(true)
 
-      // Desired directions in scene space:
-      // 1. Forward (+Z in front of the robot, slightly upward +Y)
-      // 2. Outward (sideSign * +X away from the robot's thighs/hips)
       const desiredForward = new THREE.Vector3(0, 0.2, 1).normalize()
       const desiredOutward = new THREE.Vector3(sideSign, 0.15, 0).normalize()
 
@@ -381,9 +361,6 @@ export function Model(props) {
     calibrateLimbAxes(rigRefs.current.rightForearm, 1)
     calibrateLimbAxes(rigRefs.current.rightHand, 1)
 
-    // =========================================================
-    // PASS 2: BULLETPROOF PRIORITY MATERIAL ASSIGNMENT
-    // =========================================================
     scene.traverse((child) => {
       if (child.isMesh) {
         child.castShadow = true
@@ -425,15 +402,12 @@ export function Model(props) {
   useFrame((state, delta) => {
     const t = state.clock.getElapsedTime()
     
-    // 1. Smoothly ramp tracking weight over the first 2 seconds
     trackingClock.current = Math.min(trackingClock.current + Math.min(delta, 0.05), 3.0)
     const trackWeight = THREE.MathUtils.smoothstep(trackingClock.current, 2.0, 2.6)
 
-    // Raw mouse for procedural arm sway & breathing
     const mouseX = mouseState.current.x
     const mouseY = mouseState.current.y
 
-    // Gated mouse strictly for head/body tracking look-at rotation
     const pointerX = mouseX * trackWeight
     const pointerY = mouseY * trackWeight
 
@@ -453,7 +427,6 @@ export function Model(props) {
       rightHand,
     } = rigRefs.current
 
-    // Clamps angles >= 0 so limbs ONLY move in front of the robot and outward from the legs
     const applyFrontAndSidePose = (node, forwardRad, outwardRad, maxForward = 0.38, maxOutward = 0.24, smooth = 0.07) => {
       if (!node || !node.userData.initQuat || !node.userData.forwardAxis) return
 
@@ -467,7 +440,6 @@ export function Model(props) {
       node.quaternion.slerp(_qTarget, smooth)
     }
 
-    // 1. Head tracking
     if (head) {
       const init = head.userData.initRot
       const targetY = init.y + (pointerX < 0 ? pointerX * 0.55 : pointerX * 0.4)
@@ -478,7 +450,6 @@ export function Model(props) {
       head.rotation.z = THREE.MathUtils.lerp(head.rotation.z, targetZ, 0.08)
     }
 
-    // 2. Torso subtle lean & breathing
     if (torso && torso !== head) {
       const init = torso.userData.initRot
       const targetY = init.y + pointerX * 0.14
@@ -487,7 +458,6 @@ export function Model(props) {
       torso.rotation.x = THREE.MathUtils.lerp(torso.rotation.x, targetX, 0.06)
     }
 
-    // 3. Calculate Directional Dominance (Cursor-side arm moves 3x more than opposite arm)
     let robotNdcX = 0.35
     if (groupRef.current) {
       groupRef.current.getWorldPosition(_worldPos)
@@ -495,12 +465,10 @@ export function Model(props) {
       robotNdcX = _worldPos.x
     }
 
-    // relX < 0 = cursor is on screen-left of robot; relX > 0 = cursor is on screen-right
     const relX = THREE.MathUtils.clamp((pointerX - robotNdcX) / 0.85, -1, 1)
     const leftFocus = Math.max(0, -relX) // 0..1 on screen-left
     const rightFocus = Math.max(0, relX) // 0..1 on screen-right
 
-    // Active cursor side gets 1.35x multiplier vs 0.45x on the off-side (3.0x ratio)
     const leftInfluence = 0.45 + leftFocus * 0.9
     const rightInfluence = 0.45 + rightFocus * 0.9
 
@@ -510,7 +478,6 @@ export function Model(props) {
     const activePulse = (Math.sin(t * 5.5) + 1) * 0.5 * energy * 0.1
     const sharedMotion = liftFromCursorY + energy * 0.12 + activePulse
 
-    // Upper Arms (Front-relative + outward sway, weighted 3x toward cursor side)
     const leftArmForward = 0.03 + breatheA * 0.03 + (leftFocus * 0.14 + sharedMotion) * leftInfluence
     const leftArmOutward = 0.025 + breatheA * 0.02 + (leftFocus * 0.08 + energy * 0.07) * leftInfluence
     applyFrontAndSidePose(leftArm, leftArmForward, leftArmOutward, 0.38, 0.24, 0.07)
@@ -519,7 +486,6 @@ export function Model(props) {
     const rightArmOutward = 0.025 + breatheB * 0.02 + (rightFocus * 0.08 + energy * 0.07) * rightInfluence
     applyFrontAndSidePose(rightArm, rightArmForward, rightArmOutward, 0.38, 0.24, 0.07)
 
-    // 4. Forearms: Forward elbow bend weighted toward the active cursor side
     if (leftForearm && leftForearm !== leftArm) {
       const leftElbowBend =
         0.06 + breatheA * 0.03 + (0.05 + liftFromCursorY * 1.1 + leftFocus * 0.12 + energy * 0.15) * leftInfluence
@@ -531,7 +497,6 @@ export function Model(props) {
       applyFrontAndSidePose(rightForearm, rightElbowBend, 0.02 + breatheB * 0.015 * rightInfluence, 0.42, 0.14, 0.08)
     }
 
-    // 5. Hands/Wrists: Subtle upward/forward hand flex weighted toward the active cursor side
     const handWaveL = (Math.sin(t * 2.4) + 1) * 0.5 * 0.06
     const handWaveR = (Math.sin(t * 2.4 + 1.5) + 1) * 0.5 * 0.06
 
@@ -556,7 +521,6 @@ export function Model(props) {
       )
     }
 
-    // 6. Whole-body subtle reactive turn
     if (groupRef.current) {
       const bodyTurnY = pointerX * (head ? 0.15 : 0.4) + mouseState.current.velX * 0.2
       const bodyTurnX = -pointerY * (head ? 0.06 : 0.2) - mouseState.current.velY * 0.1

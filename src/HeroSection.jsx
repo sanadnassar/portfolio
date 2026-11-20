@@ -4,6 +4,7 @@ import { Environment, Float, Lightformer, useProgress } from '@react-three/drei'
 import * as THREE from 'three'
 import { Model } from './Model'
 
+
 const END_POS = new THREE.Vector3(0, 0, 5.5)
 const END_LOOK = new THREE.Vector3(0, 0, 0)
 
@@ -46,7 +47,6 @@ function CameraIntroRig({ started, onRevealUI }) {
         const headCenter = new THREE.Vector3()
         targetBox.getCenter(headCenter)
 
-        // Park 0.025 units in front of the visor center so only the dark center fills the screen
         startPos.current.set(headCenter.x, headCenter.y + 0.02, targetBox.max.z + 0.025)
         startLook.current.set(headCenter.x, headCenter.y + 0.02, headCenter.z)
         currentPos.current.copy(startPos.current)
@@ -65,14 +65,9 @@ function CameraIntroRig({ started, onRevealUI }) {
     elapsed.current = Math.min(elapsed.current + Math.min(delta, 0.05), 4.0)
     const t = elapsed.current
 
-    // Hold pure black for 0.45s, then zoom out smoothly over 3.1s
     const raw = THREE.MathUtils.clamp((t - 0.45) / 1.5, 0, 1)
-    const ease =
-      raw < 0.5
-        ? 4 * raw * raw * raw
-        : 1 - Math.pow(-2 * raw + 2, 3) / 2
+    const ease = raw < 0.5 ? 4 * raw * raw * raw : 1 - Math.pow(-2 * raw + 2, 3) / 2
 
-    // Fade studio softbox reflections in from 0 -> 1 as the camera begins pulling back
     state.scene.environmentIntensity = THREE.MathUtils.smoothstep(raw, 0.0, 0.35)
 
     if (raw >= 0.58 && !revealed.current) {
@@ -86,7 +81,6 @@ function CameraIntroRig({ started, onRevealUI }) {
     state.camera.position.copy(currentPos.current)
     state.camera.lookAt(currentLookAt.current)
   })
-
   return null
 }
 
@@ -102,7 +96,6 @@ export default function HeroSection({ uiVisible, onRevealUI }) {
 
   return (
     <section className="relative w-full h-screen bg-black text-white overflow-hidden">
-      {/* 3D Scene Layer */}
       <div id="about" className="absolute inset-0 z-0">
         <Canvas camera={{ position: [1.75, 0.58, 0.35], fov: 42, near: 0.01 }}>
           <CameraIntroRig
@@ -112,12 +105,10 @@ export default function HeroSection({ uiVisible, onRevealUI }) {
 
           <ambientLight intensity={0.35} />
 
-          {/* Pure white/silver key & rim lights */}
           <directionalLight position={[-5, 5, 4]} intensity={3} color="#ffffff" />
           <directionalLight position={[5, 5, 4]} intensity={3} color="#ffffff" />
           <directionalLight position={[0, 6, -5]} intensity={4} color="#f8fafc" />
 
-          {/* Studio Softboxes */}
           <Environment resolution={512}>
             <Lightformer form="rect" intensity={5} color="#ffffff" position={[0, 7, 1]} rotation={[Math.PI / 2.2, 0, 0]} scale={[8, 1.2, 1]} />
             <Lightformer form="rect" intensity={4.5} color="#f8fafc" position={[-6, 0, 1]} rotation={[0, Math.PI / 2.3, 0]} scale={[6, 10, 1]} />
@@ -131,7 +122,6 @@ export default function HeroSection({ uiVisible, onRevealUI }) {
         </Canvas>
       </div>
 
-      {/* Foreground Hero Content Layer */}
       <div className="relative z-10 h-full flex flex-col justify-start px-8 md:px-24 pt-[24vh] pointer-events-none">
         <div className="max-w-2xl text-left pointer-events-auto">
           <p

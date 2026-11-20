@@ -6,6 +6,7 @@ import SkillsSection from './SkillsSection'
 import ContactSection from './ContactSection'
 import ResumeModal from './ResumeModal'
 
+
 function App() {
   const [uiVisible, setUiVisible] = useState(false)
   const [isResumeOpen, setIsResumeOpen] = useState(false)

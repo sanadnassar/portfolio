@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
+
 const RESUME_URL = '/resume.pdf'
 
 export default function ResumeModal({ isOpen, onClose }) {
@@ -39,7 +40,6 @@ export default function ResumeModal({ isOpen, onClose }) {
             onClick={(e) => e.stopPropagation()}
             className="w-full max-w-4xl h-[88vh] bg-zinc-950/90 backdrop-blur-xl border border-white/15 rounded-2xl overflow-hidden flex flex-col shadow-2xl"
           >
-            {/* HUD Top Bar */}
             <div className="flex items-center justify-between px-5 py-3.5 border-b border-white/10 bg-white/[0.02]">
               <span className="text-xs font-mono text-zinc-400 tracking-[0.18em] uppercase">
                 Sanad_Nassar_Resume.pdf
@@ -53,7 +53,6 @@ export default function ResumeModal({ isOpen, onClose }) {
                 >
                   Download PDF
                 </a>
-
                 <a
                   href={RESUME_URL}
                   target="_blank"
@@ -62,7 +61,6 @@ export default function ResumeModal({ isOpen, onClose }) {
                 >
                   New Tab ↗
                 </a>
-
                 <button
                   onClick={onClose}
                   aria-label="Close resume preview"
@@ -72,8 +70,6 @@ export default function ResumeModal({ isOpen, onClose }) {
                 </button>
               </div>
             </div>
-
-            {/* Embedded PDF Viewer */}
             <div className="flex-1 w-full bg-zinc-900">
               <iframe
                 src={`${RESUME_URL}#toolbar=0&navpanes=0`}

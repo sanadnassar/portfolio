@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react'
 import { motion, AnimatePresence, useInView } from 'framer-motion'
-import { PROJECTS_DATA, EXPERIENCE_DATA } from './projectsData'
+import { PROJECTS_DATA, EXPERIENCE_DATA } from './ProjectsData'
+
 
 export default function ProjectCarousel() {
   const [activeTab, setActiveTab] = useState('projects')
@@ -38,7 +39,6 @@ export default function ProjectCarousel() {
 
   return (
     <section className="relative w-full py-28 bg-black flex flex-col items-center justify-center overflow-hidden">
-      {/* Subtle Top Gradient Divider aligned with header padding */}
       <motion.div
         initial={{ opacity: 0, scaleX: 0.6 }}
         whileInView={{ opacity: 1, scaleX: 1 }}
@@ -48,8 +48,6 @@ export default function ProjectCarousel() {
       >
         <div className="w-full h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
       </motion.div>
-
-      {/* Header anchored for Navbar clicks */}
       <motion.div
         id="projects"
         initial={{ opacity: 0, y: 24 }}
@@ -59,7 +57,6 @@ export default function ProjectCarousel() {
         className="w-full pl-8 md:pl-[200px] pr-8 md:pr-60 flex flex-col sm:flex-row sm:items-end justify-between mb-16 z-30 scroll-mt-24"
       >
         <div>
-          {/* Interactive HUD Track Tabs */}
           <div className="inline-flex items-center gap-6 mb-5 border-b border-white/[0.08]">
             {['projects', 'experience'].map((tab) => {
               const isActive = activeTab === tab
@@ -83,7 +80,6 @@ export default function ProjectCarousel() {
               )
             })}
           </div>
-
           <div className="flex items-baseline ml-[-6px] gap-3">
             <h2 className="text-4xl md:text-5xl font-thin text-gray-300 tracking-tight">
               Recent
@@ -93,8 +89,6 @@ export default function ProjectCarousel() {
             </h2>
           </div>
         </div>
-
-        {/* Minimalist Pill Navigation */}
         <div className="flex items-center gap-3 mt-6 sm:mt-0">
           <button
             onClick={handlePrev}
@@ -112,8 +106,6 @@ export default function ProjectCarousel() {
           </button>
         </div>
       </motion.div>
-
-      {/* Carousel Stage — uses useInView to animate cards directly without parent opacity */}
       <div
         ref={stageRef}
         className="relative w-full max-w-6xl h-[430px] flex items-center justify-center z-10 px-4"
@@ -166,12 +158,12 @@ export default function ProjectCarousel() {
                 </div>
                 <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-6 border-t border-white/10">
                   <div className="flex flex-wrap gap-2">
-                    {item.tech.map((tag) => (
+                    {item.tech.map((tech) => (
                       <span
-                        key={tag}
-                        className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-xs font-mono text-gray-300"
+                        key={tech}
+                        className="px-3 py-1 rounded-full bg-white/[0.04] border border-white/15 text-xs font-mono text-zinc-300 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.03] hover:bg-white/15 hover:border-white/40 hover:text-white"
                       >
-                        {tag}
+                        {tech}
                       </span>
                     ))}
                   </div>
